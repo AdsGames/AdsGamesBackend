@@ -1,7 +1,6 @@
 #
 # example Dockerfile for https://docs.docker.com/engine/examples/postgresql_service/
 #
-
 FROM ubuntu:16.04
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
@@ -33,7 +32,7 @@ RUN    /etc/init.d/postgresql start &&\
 
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible.
-RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+RUN echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/9.3/main/pg_hba.conf
 
 # And add ``listen_addresses`` to ``/etc/postgresql/9.3/main/postgresql.conf``
 RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf

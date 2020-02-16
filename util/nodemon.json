@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": "ts",
   "ignore": ["src/public"],
-  "exec": "npx concurrently --kill-others \"yarn start\" \"yarn codegen\""
+  "exec": "yarn start"
 }

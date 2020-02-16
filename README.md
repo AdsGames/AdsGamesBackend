@@ -1,5 +1,15 @@
 # AdsGamesBackend
 
+## Env file
+
+```
+PG_USER=adsgames
+PG_DATABASE=adsgames
+PG_PASSWORD=adsgames
+PG_HOST=localhost
+PG_PORT=5432
+```
+
 ## Start Docker
 
 `docker build -t adsgames .`

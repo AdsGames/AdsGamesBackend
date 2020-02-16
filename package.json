@@ -15,7 +15,8 @@
     "migrate": "npx knex migrate:latest",
     "rollback": "npx knex migrate:rollback",
     "seed": "npx knex seed:run",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "db-init": "yarn rollback; yarn migrate; yarn seed;"
   },
   "dependencies": {
     "apollo-server": "^2.10.0",
@@ -38,6 +39,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "knex": "^0.20.9",
+    "merge-graphql-schemas": "^1.7.6",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "ts-node": "^8.6.2",
