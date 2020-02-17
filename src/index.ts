@@ -12,4 +12,5 @@ const server = new ApolloServer({
   },
 });
 
+// eslint-disable-next-line
 server.listen().then(({ url }) => console.log(`server ready at ${url}`));

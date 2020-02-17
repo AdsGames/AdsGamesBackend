@@ -1,16 +1,25 @@
 {
   "env": {
     "node": true,
-    "browser": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "browser": true,
+    "es6": true
   },
   "parser": "@typescript-eslint/parser",
-  "extends": ["eslint:recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:all", "plugin:@typescript-eslint/all", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "rules": {}
+  "rules": {
+    "prettier/prettier": "warn",
+    "id-length": 0,
+    "sort-imports": 0,
+    "one-var": 0,
+    "sort-keys": 0,
+    "no-process-env": 0,
+
+    "@typescript-eslint/no-magic-numbers": 0
+  }
 }

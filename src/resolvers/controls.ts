@@ -1,24 +1,24 @@
 import { QueryResult } from "pg";
 import { pool } from "../db";
-import { Control } from "../types";
+import { Control, ControlType } from "../types";
 import { getControlType } from "./controlTypes";
 
-export const getControls = async () => {
-  const results: QueryResult<any> = await pool.query('SELECT * FROM "Controls"');
+export const getControls = async (): Promise<Control[]> => {
+  const results: QueryResult<Control> = await pool.query<Control>('SELECT * FROM "Controls"');
   return results.rows;
 };
 
-export const getControlsForGame = async (id: string) => {
-  const results: QueryResult<any> = await pool.query(`SELECT * FROM "Controls" WHERE "gameId" = '${id}'`);
+export const getControlsForGame = async (id: string): Promise<Control[]> => {
+  const results: QueryResult<Control> = await pool.query<Control>(`SELECT * FROM "Controls" WHERE "gameId" = '${id}'`);
   return results.rows;
 };
 
 export default {
   Query: {
-    controls: () => getControls,
+    controls: getControls,
   },
   Control: {
-    control(control: Control) {
+    async control(control: Control): Promise<ControlType> {
       return getControlType(control.controlId);
     },
   },
