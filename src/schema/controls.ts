@@ -2,12 +2,13 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Control {
-    game_id: String!
-    control_id: String!
+    gameId: ID!
+    controlId: ID!
     description: String!
+    control: ControlType!
   }
 
   type Query {
-    getControls: [Control]!
+    controls: [Control!]!
   }
 `;

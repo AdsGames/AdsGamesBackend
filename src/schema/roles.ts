@@ -2,13 +2,13 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Role {
-    id: String!
+    id: ID!
     name: String!
-    short_name: String!
+    shortName: String!
   }
 
   type Query {
-    getRoles: [Role]!
-    getRole(id: Int!): Role
+    roles: [Role!]!
+    role(id: String!): Role
   }
 `;

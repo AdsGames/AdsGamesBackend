@@ -2,11 +2,11 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Game {
-    id: String!
-    short_name: String!
+    id: ID!
+    shortName: String!
     name: String!
     description: String!
-    type_id: String!
+    typeId: ID!
     source: String
     file: String
     width: Int
@@ -14,10 +14,12 @@ export default gql`
     version: String
     visible: Boolean
     controller: Int
+    type: GameType!
+    controls: [Control!]!
   }
 
   type Query {
-    getGames: [Game]!
-    getGame(id: Int!): Game
+    games: [Game!]!
+    game(id: String!): Game
   }
 `;

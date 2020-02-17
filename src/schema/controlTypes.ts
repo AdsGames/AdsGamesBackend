@@ -2,14 +2,14 @@ import { gql } from "apollo-server";
 
 export default gql`
   type ControlType {
-    id: String!
+    id: ID!
     name: String!
-    short_name: String!
+    shortName: String!
     image: String!
   }
 
   type Query {
-    getControlTypes: [ControlType]!
-    getControlType(id: Int!): ControlType
+    controlTypes: [ControlType!]!
+    controlType(id: String!): ControlType
   }
 `;

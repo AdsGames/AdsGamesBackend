@@ -2,7 +2,7 @@ import * as Knex from "knex";
 
 export async function up(knex: Knex): Promise<any> {
   return knex.schema
-    .createTable("game_types", table => {
+    .createTable("GameTypes", table => {
       table
         .string("id", 36)
         .primary()
@@ -11,29 +11,29 @@ export async function up(knex: Knex): Promise<any> {
       table.string("description").notNullable();
     })
 
-    .createTable("control_types", table => {
+    .createTable("ControlTypes", table => {
       table
         .string("id", 36)
         .primary()
         .notNullable();
-      table.string("short_name").notNullable();
+      table.string("shortName").notNullable();
       table.string("name").notNullable();
       table.string("image").notNullable();
     })
 
-    .createTable("games", table => {
+    .createTable("Games", table => {
       table
         .string("id", 36)
         .primary()
         .notNullable();
-      table.string("short_name").notNullable();
+      table.string("shortName").notNullable();
       table.string("name").notNullable();
       table.string("description", 1024).notNullable();
-      table.string("type_id").notNullable();
+      table.string("typeId").notNullable();
       table
-        .foreign("type_id")
+        .foreign("typeId")
         .references("id")
-        .inTable("game_types");
+        .inTable("GameTypes");
       table.string("source");
       table.string("file");
       table.integer("width");
@@ -43,30 +43,30 @@ export async function up(knex: Knex): Promise<any> {
       table.integer("controller");
     })
 
-    .createTable("controls", table => {
-      table.string("game_id").notNullable();
+    .createTable("Controls", table => {
+      table.string("gameId").notNullable();
       table
-        .foreign("game_id")
+        .foreign("gameId")
         .references("id")
-        .inTable("games");
-      table.string("control_id").notNullable();
+        .inTable("Games");
+      table.string("controlId").notNullable();
       table
-        .foreign("control_id")
+        .foreign("controlId")
         .references("id")
-        .inTable("control_types");
+        .inTable("ControlTypes");
       table.string("description").notNullable();
     })
 
-    .createTable("roles", table => {
+    .createTable("Roles", table => {
       table
         .string("id", 36)
         .primary()
         .notNullable();
       table.string("name").notNullable();
-      table.string("short_name").notNullable();
+      table.string("shortName").notNullable();
     })
 
-    .createTable("users", table => {
+    .createTable("Users", table => {
       table
         .string("id", 36)
         .primary()
@@ -74,11 +74,11 @@ export async function up(knex: Knex): Promise<any> {
       table.string("username").notNullable();
       table.string("name").notNullable();
       table.string("email").notNullable();
-      table.string("role_id").notNullable();
+      table.string("roleId").notNullable();
       table
-        .foreign("role_id")
+        .foreign("roleId")
         .references("id")
-        .inTable("roles");
+        .inTable("Roles");
       table.string("avatar");
       table.string("about", 1024);
       table.string("website");
@@ -88,10 +88,10 @@ export async function up(knex: Knex): Promise<any> {
 
 export async function down(knex: Knex): Promise<any> {
   return knex.schema
-    .dropTable("users")
-    .dropTable("roles")
-    .dropTable("controls")
-    .dropTable("games")
-    .dropTable("control_types")
-    .dropTable("game_types");
+    .dropTable("Users")
+    .dropTable("Roles")
+    .dropTable("Controls")
+    .dropTable("Games")
+    .dropTable("ControlTypes")
+    .dropTable("GameTypes");
 }

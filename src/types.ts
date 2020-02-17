@@ -16,26 +16,27 @@ export enum CacheControlScope {
 
 export type Control = {
    __typename?: 'Control',
-  game_id: Scalars['String'],
-  control_id: Scalars['String'],
+  gameId: Scalars['ID'],
+  controlId: Scalars['ID'],
   description: Scalars['String'],
+  control: ControlType,
 };
 
 export type ControlType = {
    __typename?: 'ControlType',
-  id: Scalars['String'],
+  id: Scalars['ID'],
   name: Scalars['String'],
-  short_name: Scalars['String'],
+  shortName: Scalars['String'],
   image: Scalars['String'],
 };
 
 export type Game = {
    __typename?: 'Game',
-  id: Scalars['String'],
-  short_name: Scalars['String'],
+  id: Scalars['ID'],
+  shortName: Scalars['String'],
   name: Scalars['String'],
   description: Scalars['String'],
-  type_id: Scalars['String'],
+  typeId: Scalars['ID'],
   source?: Maybe<Scalars['String']>,
   file?: Maybe<Scalars['String']>,
   width?: Maybe<Scalars['Int']>,
@@ -43,71 +44,74 @@ export type Game = {
   version?: Maybe<Scalars['String']>,
   visible?: Maybe<Scalars['Boolean']>,
   controller?: Maybe<Scalars['Int']>,
+  type: GameType,
+  controls: Array<Control>,
 };
 
 export type GameType = {
    __typename?: 'GameType',
-  id: Scalars['String'],
+  id: Scalars['ID'],
   name: Scalars['String'],
   description: Scalars['String'],
 };
 
 export type Query = {
    __typename?: 'Query',
-  getControlTypes: Array<Maybe<ControlType>>,
-  getControlType?: Maybe<ControlType>,
-  getControls: Array<Maybe<Control>>,
-  getGameTypes: Array<Maybe<GameType>>,
-  getGameType?: Maybe<GameType>,
-  getGames: Array<Maybe<Game>>,
-  getGame?: Maybe<Game>,
-  getRoles: Array<Maybe<Role>>,
-  getRole?: Maybe<Role>,
-  getUsers: Array<Maybe<User>>,
-  getUser?: Maybe<User>,
+  controlTypes: Array<ControlType>,
+  controlType?: Maybe<ControlType>,
+  controls: Array<Control>,
+  gameTypes: Array<GameType>,
+  gameType?: Maybe<GameType>,
+  games: Array<Game>,
+  game?: Maybe<Game>,
+  roles: Array<Role>,
+  role?: Maybe<Role>,
+  users: Array<User>,
+  user?: Maybe<User>,
 };
 
 
-export type QueryGetControlTypeArgs = {
-  id: Scalars['Int']
+export type QueryControlTypeArgs = {
+  id: Scalars['String']
 };
 
 
-export type QueryGetGameTypeArgs = {
-  id: Scalars['Int']
+export type QueryGameTypeArgs = {
+  id: Scalars['String']
 };
 
 
-export type QueryGetGameArgs = {
-  id: Scalars['Int']
+export type QueryGameArgs = {
+  id: Scalars['String']
 };
 
 
-export type QueryGetRoleArgs = {
-  id: Scalars['Int']
+export type QueryRoleArgs = {
+  id: Scalars['String']
 };
 
 
-export type QueryGetUserArgs = {
-  id: Scalars['Int']
+export type QueryUserArgs = {
+  id: Scalars['String']
 };
 
 export type Role = {
    __typename?: 'Role',
-  id: Scalars['String'],
+  id: Scalars['ID'],
   name: Scalars['String'],
-  short_name: Scalars['String'],
+  shortName: Scalars['String'],
 };
 
 
 export type User = {
    __typename?: 'User',
-  id: Scalars['String'],
+  id: Scalars['ID'],
   name: Scalars['String'],
   email: Scalars['String'],
-  role_id: Scalars['String'],
+  roleId: Scalars['ID'],
   avatar?: Maybe<Scalars['String']>,
   about?: Maybe<Scalars['String']>,
   website?: Maybe<Scalars['String']>,
   location?: Maybe<Scalars['String']>,
+  role: Role,
 };

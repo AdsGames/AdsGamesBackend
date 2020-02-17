@@ -2,13 +2,13 @@ import { gql } from "apollo-server";
 
 export default gql`
   type GameType {
-    id: String!
+    id: ID!
     name: String!
     description: String!
   }
 
   type Query {
-    getGameTypes: [GameType]!
-    getGameType(id: Int!): GameType
+    gameTypes: [GameType!]!
+    gameType(id: String!): GameType
   }
 `;
