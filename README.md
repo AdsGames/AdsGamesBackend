@@ -10,28 +10,45 @@ PG_HOST=localhost
 PG_PORT=5432
 ```
 
-## Start Docker
+## Quickstart
+
+### Postgres docker container
 
 `docker build -t adsgames .`
 
 `docker run --rm -p 5432:5432 adsgames`
 
-## Install packages
+### Node
 
-`npm install`
+`yarn install`
 
-## Start node server
+`yarn db-init`
 
-`npm start-dev`
+`yarn start-dev`
 
-## Create db migrations
+## Scripts
+
+### Codegen type generation
+Codegen provides a quick and easy way to generate typescript types from the graphql schema. You will have to have the graphql server running for this to work.
+
+`yarn codegen`
+
+### Create db migrations
 
 `npx knex migrate:make migration_name -x ts`
 
-`npx knex migrate:latest`
+### Run migrations
 
-## Create seed file
+`npx knex migrate:latest` or `yarn migrate`
+
+### Rollback migrations
+
+`npx knex migrate:rollback` or `yarn rollback`
+
+### Create seed file
 
 `npx knex seed:make seed_name`
 
-`npx knex seed:run`
+### Run seedfile
+
+`npx knex seed:run` or `yarn seed`
