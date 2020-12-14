@@ -1,6 +1,6 @@
-import { QueryResult } from "pg";
+import type { QueryResult } from "pg";
 import { pool } from "../db";
-import { ControlType } from "../types";
+import type { ControlType } from "../types";
 
 export const getControlTypes = async (): Promise<ControlType[]> => {
   const results: QueryResult<ControlType> = await pool.query<ControlType>('SELECT * FROM "ControlTypes" ORDER BY id ASC');

@@ -5,6 +5,7 @@ import typeDefs from "./typeDefs";
 import { pool } from "./db";
 
 const server = new ApolloServer({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   resolvers,
   typeDefs,
   context: {

@@ -1,6 +1,6 @@
-import { QueryResult } from "pg";
+import type { QueryResult } from "pg";
 import { pool } from "../db";
-import { Role } from "../types";
+import type { Role } from "../types";
 
 export const getRoles = async (): Promise<Role[]> => {
   const results: QueryResult<Role> = await pool.query<Role>('SELECT * FROM "Roles" ORDER BY id ASC');

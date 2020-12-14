@@ -1,6 +1,6 @@
 import * as Knex from "knex";
 
-export async function seed(knex: Knex): Promise<any> {
+export async function seed(knex: Knex): Promise<number[]> {
   return knex("GameTypes")
     .del()
     .then(() => {
