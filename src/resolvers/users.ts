@@ -1,6 +1,6 @@
-import { QueryResult } from "pg";
+import type { QueryResult } from "pg";
 import { pool } from "../db";
-import { Role, User } from "../types";
+import type { Role, User } from "../types";
 
 import { getRole } from "./roles";
 

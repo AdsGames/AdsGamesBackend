@@ -1,12 +1,12 @@
 {
-  "name": "AdsGamesBackend",
+  "name": "ads-games-backend",
   "version": "1.0.0",
   "description": "Backend for A.D.S. Games",
   "main": "src/index.ts",
   "repository": "https://github.com/ADSgames/AdsGamesBackend.git",
   "author": "Allan Legemaate <alegemaate@gmail.com>",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "start": "ts-node src/index.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
@@ -16,34 +16,37 @@
     "rollback": "npx knex migrate:rollback",
     "seed": "npx knex seed:run",
     "codegen": "graphql-codegen --config codegen.yml",
-    "db-init": "yarn rollback && yarn migrate && yarn seed;"
+    "db-init": "yarn rollback && yarn migrate && yarn seed;",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "type-check": "tsc",
+    "format-check": "prettier --check \"src/**/*.{ts,tsx,md}\""
   },
   "dependencies": {
     "apollo-server": "^2.10.0",
-    "graphql": "^14.6.0",
-    "pg": "^7.18.1",
-    "uuid": "^3.4.0"
+    "graphql": "^15.4.0",
+    "pg": "^8.5.1",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.12.2",
-    "@graphql-codegen/introspection": "1.12.2",
+    "@graphql-codegen/introspection": "^1.15.3",
     "@graphql-codegen/typescript": "^1.12.2",
-    "@graphql-codegen/typescript-resolvers": "1.12.2",
+    "@graphql-codegen/typescript-resolvers": "^1.15.3",
     "@types/dotenv": "^8.2.0",
-    "@types/node": "^13.7.0",
+    "@types/node": "^14.0.13",
     "@types/pg": "^7.14.1",
-    "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/parser": "^2.19.2",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
     "concurrently": "^5.1.0",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "knex": "^0.20.9",
+    "knex": "^0.21.13",
     "merge-graphql-schemas": "^1.7.6",
     "nodemon": "^2.0.2",
-    "prettier": "^1.19.1",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "prettier": "^2.0.5",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   }
 }

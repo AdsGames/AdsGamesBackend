@@ -1,0 +1,12 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: adsgames
+      POSTGRES_USER: adsgames
+      POSTGRES_DB: adsgames
+    ports:
+      - 5432:5432

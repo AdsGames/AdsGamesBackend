@@ -18,8 +18,14 @@ export default gql`
     controls: [Control!]!
   }
 
+  type FeaturedGame {
+    gameId: String!
+    place: Int!
+  }
+
   type Query {
     games: [Game!]!
     game(id: String!): Game
+    featuredGames: [FeaturedGame!]!
   }
 `;

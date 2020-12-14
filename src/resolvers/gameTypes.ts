@@ -1,6 +1,6 @@
-import { QueryResult } from "pg";
+import type { QueryResult } from "pg";
 import { pool } from "../db";
-import { GameType } from "../types";
+import type { GameType } from "../types";
 
 export const getGameTypes = async (): Promise<GameType[]> => {
   const results: QueryResult<GameType> = await pool.query<GameType>('SELECT * FROM "GameTypes" ORDER BY id ASC');
