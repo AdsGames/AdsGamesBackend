@@ -1,37 +1,56 @@
-import type { QueryResult } from "pg";
-import { pool } from "../db";
-import type { Control, Game, GameType, FeaturedGame } from "../types";
+import { client } from "../db";
+import type { Control, Game, GameType, FeaturedGame, GameImage } from "../types";
 
-import { getGameType } from "./gameTypes";
-import { getControlsForGame } from "./controls";
-
-export const getGames = async (): Promise<Game[]> => {
-  const results: QueryResult<Game> = await pool.query<Game>('SELECT * FROM "Games" ORDER BY id ASC');
-  return results.rows;
+export const getControls = async (): Promise<Control[]> => {
+  return client.select().table<Control>("control");
 };
 
-export const getGame = async (id: string): Promise<Game> => {
-  const results: QueryResult<Game> = await pool.query<Game>(`SELECT * FROM "Games" WHERE id = '${id}'`);
-  return results.rows[0];
+export const getControlsForGame = async (id: string): Promise<Control[]> => {
+  return client.select().table<Control>("control").where("game_id", id);
+};
+
+export const getGameTypes = async (): Promise<GameType[]> => {
+  return client.select().table<GameType>("game_type").orderBy("id", "asc");
+};
+
+export const getGameType = async (id: string): Promise<GameType | undefined> => {
+  return client.select().table<GameType>("game_type").where("id", id).first();
+};
+
+export const getGames = async (): Promise<Game[]> => {
+  return client.select().table<Game>("game").orderBy("id", "asc");
+};
+
+export const getGame = async (id: string): Promise<Game | undefined> => {
+  return client.select().table<Game>("game").where("id", id).first();
 };
 
 export const getFeaturedGames = async (): Promise<FeaturedGame[]> => {
-  const results: QueryResult<FeaturedGame> = await pool.query<FeaturedGame>('SELECT * FROM "FeaturedGames"');
-  return results.rows;
+  return client.select().table<FeaturedGame>("featured_game");
+};
+
+export const getImagesForGame = async (id: string): Promise<GameImage[]> => {
+  return client.select().table<GameImage>("game_image").where("game_id", id);
 };
 
 export default {
   Query: {
     games: getGames,
-    game: async (_: unknown, { id }: { id: string }): Promise<Game> => getGame(id),
+    game: async (_: unknown, { id }: { id: string }): Promise<Game | undefined> => getGame(id),
     featuredGames: getFeaturedGames,
+    gameTypes: getGameTypes,
+    gameType: async (_: unknown, { id }: { id: string }): Promise<GameType | undefined> => getGameType(id),
+    controls: getControls,
   },
   Game: {
-    async type(game: Game): Promise<GameType> {
-      return getGameType(game.typeId);
+    async type(game: Game): Promise<GameType | undefined> {
+      return getGameType(game.type_id);
     },
     async controls(game: Game): Promise<Control[]> {
       return getControlsForGame(game.id);
+    },
+    async images(game: Game): Promise<GameImage[]> {
+      return getImagesForGame(game.id);
     },
   },
 };
