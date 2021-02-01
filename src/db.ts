@@ -1,10 +1,13 @@
 import "dotenv/config";
-import { Pool } from "pg";
+import knex from "knex";
 
-export const pool = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: parseInt(process.env.PG_PORT ?? "5432", 10),
+export const client = knex({
+  client: "pg",
+  connection: {
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DATABASE,
+    password: process.env.PG_PASSWORD,
+    port: 5432,
+  },
 });

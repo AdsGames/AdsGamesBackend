@@ -1,27 +1,32 @@
-import type { QueryResult } from "pg";
-import { pool } from "../db";
+import { client } from "../db";
 import type { Role, User } from "../types";
 
-import { getRole } from "./roles";
-
-export const getUsers = async (): Promise<User[]> => {
-  const results: QueryResult<User> = await pool.query<User>('SELECT * FROM "Users" ORDER BY id ASC');
-  return results.rows;
+export const getRoles = async (): Promise<Role[]> => {
+  return client.select().table<Role>("role").orderBy("id", "asc");
 };
 
-export const getUser = async (id: string): Promise<User> => {
-  const results: QueryResult<User> = await pool.query<User>(`SELECT * FROM "Users" WHERE id = '${id}'`);
-  return results.rows[0];
+export const getRole = async (id: string): Promise<Role | undefined> => {
+  return client.select().table<Role>("role").where("id", id).first();
+};
+
+export const getUsers = async (): Promise<User[]> => {
+  return client.select().table<User>("user").orderBy("id", "asc");
+};
+
+export const getUser = async (id: string): Promise<User | undefined> => {
+  return client.select().table<User>("user").where("id", id).first();
 };
 
 export default {
   Query: {
     users: getUsers,
-    user: async (_: unknown, { id }: { id: string }): Promise<User> => getUser(id),
+    user: async (_: unknown, { id }: { id: string }): Promise<User | undefined> => getUser(id),
+    roles: getRoles,
+    role: async (_: unknown, { id }: { id: string }): Promise<Role | undefined> => getRole(id),
   },
   User: {
-    async role(user: User): Promise<Role> {
-      return getRole(user.roleId);
+    async role(user: User): Promise<Role | undefined> {
+      return getRole(user.role_id);
     },
   },
 };

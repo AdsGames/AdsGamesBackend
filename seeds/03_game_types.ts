@@ -1,10 +1,10 @@
 import * as Knex from "knex";
 
 export async function seed(knex: Knex): Promise<number[]> {
-  return knex("GameTypes")
+  return knex("game_type")
     .del()
     .then(() => {
-      return knex("GameTypes").insert([
+      return knex("game_type").insert([
         {
           id: "ecb6dc28-6b9d-4c18-a9ca-39bb702ee401",
           name: "Download",
