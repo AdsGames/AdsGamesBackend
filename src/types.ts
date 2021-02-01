@@ -28,6 +28,12 @@ export type GameImage = {
   url: string;
 };
 
+export type GameFile = {
+  game_id: string;
+  type: string;
+  url: string;
+};
+
 export type Game = {
   id: string;
   short_name: string;

@@ -19,6 +19,12 @@ export default gql`
     url: String!
   }
 
+  type GameFile {
+    game_id: ID!
+    type: String!
+    url: String!
+  }
+
   type Game {
     id: ID!
     short_name: String!
@@ -35,6 +41,7 @@ export default gql`
     type: GameType!
     controls: [Control!]!
     images: [GameImage!]!
+    files: [GameFile!]!
   }
 
   type FeaturedGame {

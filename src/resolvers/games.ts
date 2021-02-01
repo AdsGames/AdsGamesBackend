@@ -1,5 +1,5 @@
 import { client } from "../db";
-import type { Control, Game, GameType, FeaturedGame, GameImage } from "../types";
+import type { Control, Game, GameType, FeaturedGame, GameImage, GameFile } from "../types";
 
 export const getControls = async (): Promise<Control[]> => {
   return client.select().table<Control>("control");
@@ -33,6 +33,10 @@ export const getImagesForGame = async (id: string): Promise<GameImage[]> => {
   return client.select().table<GameImage>("game_image").where("game_id", id);
 };
 
+export const getFilesForGame = async (id: string): Promise<GameFile[]> => {
+  return client.select().table<GameFile>("game_file").where("game_id", id);
+};
+
 export default {
   Query: {
     games: getGames,
@@ -51,6 +55,9 @@ export default {
     },
     async images(game: Game): Promise<GameImage[]> {
       return getImagesForGame(game.id);
+    },
+    async files(game: Game): Promise<GameFile[]> {
+      return getFilesForGame(game.id);
     },
   },
 };
