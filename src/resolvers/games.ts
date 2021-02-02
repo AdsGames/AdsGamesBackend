@@ -1,5 +1,5 @@
 import { client } from "../db";
-import type { Control, Game, GameType, FeaturedGame, GameImage } from "../types";
+import type { Control, Game, FeaturedGame, GameImage, GameFile } from "../types";
 
 export const getControls = async (): Promise<Control[]> => {
   return client.select().table<Control>("control");
@@ -7,14 +7,6 @@ export const getControls = async (): Promise<Control[]> => {
 
 export const getControlsForGame = async (id: string): Promise<Control[]> => {
   return client.select().table<Control>("control").where("game_id", id);
-};
-
-export const getGameTypes = async (): Promise<GameType[]> => {
-  return client.select().table<GameType>("game_type").orderBy("id", "asc");
-};
-
-export const getGameType = async (id: string): Promise<GameType | undefined> => {
-  return client.select().table<GameType>("game_type").where("id", id).first();
 };
 
 export const getGames = async (): Promise<Game[]> => {
@@ -33,24 +25,26 @@ export const getImagesForGame = async (id: string): Promise<GameImage[]> => {
   return client.select().table<GameImage>("game_image").where("game_id", id);
 };
 
+export const getFilesForGame = async (id: string): Promise<GameFile[]> => {
+  return client.select().table<GameFile>("game_file").where("game_id", id);
+};
+
 export default {
   Query: {
     games: getGames,
     game: async (_: unknown, { id }: { id: string }): Promise<Game | undefined> => getGame(id),
     featuredGames: getFeaturedGames,
-    gameTypes: getGameTypes,
-    gameType: async (_: unknown, { id }: { id: string }): Promise<GameType | undefined> => getGameType(id),
     controls: getControls,
   },
   Game: {
-    async type(game: Game): Promise<GameType | undefined> {
-      return getGameType(game.type_id);
-    },
     async controls(game: Game): Promise<Control[]> {
       return getControlsForGame(game.id);
     },
     async images(game: Game): Promise<GameImage[]> {
       return getImagesForGame(game.id);
+    },
+    async files(game: Game): Promise<GameFile[]> {
+      return getFilesForGame(game.id);
     },
   },
 };
