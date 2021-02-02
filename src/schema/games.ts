@@ -1,12 +1,6 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type GameType {
-    id: ID!
-    name: String!
-    description: String!
-  }
-
   type Control {
     game_id: ID!
     type: String!
@@ -21,7 +15,7 @@ export default gql`
 
   type GameFile {
     game_id: ID!
-    type: String!
+    platform: String!
     url: String!
   }
 
@@ -30,15 +24,7 @@ export default gql`
     short_name: String!
     name: String!
     description: String!
-    type_id: ID!
-    source: String
-    file: String
-    width: Int
-    height: Int
-    version: String
     visible: Boolean
-    controller: Int
-    type: GameType!
     controls: [Control!]!
     images: [GameImage!]!
     files: [GameFile!]!
@@ -54,7 +40,5 @@ export default gql`
     game(id: String!): Game
     featuredGames: [FeaturedGame!]!
     controls: [Control!]!
-    gameTypes: [GameType!]!
-    gameType(id: String!): GameType
   }
 `;

@@ -4,8 +4,8 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("game_file", (table) => {
     table.string("game_id").notNullable();
     table.foreign("game_id").references("id").inTable("game");
-    table.enu("type", ["embed", "download"]).notNullable();
     table.string("url").notNullable();
+    table.enu("platform", ["windows", "mac", "linux", "web", "source"]).notNullable();
   });
 }
 

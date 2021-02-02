@@ -1,8 +1,3 @@
-export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-
 export type ControlType = {
   id: string;
   name: string;
@@ -16,21 +11,15 @@ export type Control = {
   type: string;
 };
 
-export type GameType = {
-  id: string;
-  name: string;
-  description: string;
-};
-
 export type GameImage = {
   game_id: string;
-  type: string;
+  type: "thumbnail" | "wide" | "large";
   url: string;
 };
 
 export type GameFile = {
   game_id: string;
-  type: string;
+  platform: "windows" | "mac" | "linux" | "web" | "source";
   url: string;
 };
 
@@ -39,17 +28,10 @@ export type Game = {
   short_name: string;
   name: string;
   description: string;
-  type_id: string;
-  source?: Maybe<string>;
-  file?: Maybe<string>;
-  width?: Maybe<number>;
-  height?: Maybe<number>;
-  version?: Maybe<string>;
-  visible?: Maybe<boolean>;
-  controller?: Maybe<number>;
-  type: GameType;
+  visible: boolean;
   controls: Array<Control>;
   images: Array<GameImage>;
+  files: Array<GameFile>;
 };
 
 export type FeaturedGame = {
@@ -68,9 +50,9 @@ export type User = {
   name: string;
   email: string;
   role_id: string;
-  avatar?: Maybe<string>;
-  about?: Maybe<string>;
-  website?: Maybe<string>;
-  location?: Maybe<string>;
+  avatar?: string | null;
+  about?: string | null;
+  website?: string | null;
+  location?: string | null;
   role: Role;
 };
