@@ -1,16 +1,21 @@
-import "dotenv/config";
-import { ApolloServer } from "apollo-server";
-import resolvers from "./resolvers";
-import typeDefs from "./typeDefs";
+import { ApolloServer } from "apollo-server-lambda";
+import { typeDefs } from "./schema";
+
+import { resolvers as gameResolvers } from "./resolvers/games";
 
 const server = new ApolloServer({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  resolvers,
+  resolvers: [gameResolvers],
   typeDefs,
   cacheControl: {
     defaultMaxAge: 0,
   },
+  playground: true,
+  introspection: true,
 });
 
-// eslint-disable-next-line
-server.listen().then(({ url }) => console.log(`server ready at ${url}`));
+export const graphql = server.createHandler({
+  cors: {
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  },
+});

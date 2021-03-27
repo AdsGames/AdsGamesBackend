@@ -1,6 +1,6 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server-lambda";
 
-export default gql`
+export const typeDefs = gql`
   type Control {
     game_id: ID!
     type: String!
@@ -35,10 +35,36 @@ export default gql`
     place: Int!
   }
 
+  type Role {
+    id: ID!
+    name: String!
+    shortName: String!
+  }
+
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    role_id: ID!
+    avatar: String
+    about: String
+    website: String
+    location: String
+    role: Role!
+  }
+
   type Query {
+    users: [User!]!
+    user(id: String!): User
+    roles: [Role!]!
+    role(id: String!): Role
     games: [Game!]!
     game(id: String!): Game
     featuredGames: [FeaturedGame!]!
     controls: [Control!]!
+  }
+
+  type Mutation {
+    _empty: String
   }
 `;

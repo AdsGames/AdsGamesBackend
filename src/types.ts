@@ -38,21 +38,3 @@ export type FeaturedGame = {
   game_id: string;
   place: number;
 };
-
-export type Role = {
-  id: string;
-  name: string;
-  short_name: string;
-};
-
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  role_id: string;
-  avatar?: string | null;
-  about?: string | null;
-  website?: string | null;
-  location?: string | null;
-  role: Role;
-};

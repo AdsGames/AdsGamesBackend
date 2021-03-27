@@ -1,38 +1,60 @@
-import { client } from "../db";
-import type { Control, Game, FeaturedGame, GameImage, GameFile } from "../types";
+import type {
+  Control,
+  Game,
+  FeaturedGame,
+  GameImage,
+  GameFile,
+} from "../types";
+import { get, scan, query } from "../helpers/operations";
+import { TABLES } from "../constants/tables";
 
-export const getControls = async (): Promise<Control[]> => {
-  return client.select().table<Control>("control");
+const getGames = async (): Promise<Game[]> => {
+  return scan<Game>({ TableName: TABLES.GAMES });
 };
 
-export const getControlsForGame = async (id: string): Promise<Control[]> => {
-  return client.select().table<Control>("control").where("game_id", id);
+const getGame = async (id: string): Promise<Game | null> => {
+  return get<Game>({ TableName: TABLES.GAMES, Key: { id: { S: id } } });
 };
 
-export const getGames = async (): Promise<Game[]> => {
-  return client.select().table<Game>("game").orderBy("id", "asc");
+const getFeaturedGames = async (): Promise<FeaturedGame[]> => {
+  return scan<FeaturedGame>({ TableName: TABLES.FEATURED_GAMES });
 };
 
-export const getGame = async (id: string): Promise<Game | undefined> => {
-  return client.select().table<Game>("game").where("id", id).first();
+const getImagesForGame = async (id: string): Promise<GameImage[]> => {
+  return query<GameImage>({
+    TableName: TABLES.GAME_IMAGES,
+    FilterExpression: "game_id = :value",
+    ExpressionAttributeValues: { ":value": { S: id } },
+  });
 };
 
-export const getFeaturedGames = async (): Promise<FeaturedGame[]> => {
-  return client.select().table<FeaturedGame>("featured_game");
+const getFilesForGame = async (id: string): Promise<GameFile[]> => {
+  return query<GameFile>({
+    TableName: TABLES.GAME_FILES,
+    FilterExpression: "game_id = :value",
+    ExpressionAttributeValues: { ":value": { S: id } },
+  });
 };
 
-export const getImagesForGame = async (id: string): Promise<GameImage[]> => {
-  return client.select().table<GameImage>("game_image").where("game_id", id);
+const getControls = async (): Promise<Control[]> => {
+  return scan<Control>({ TableName: TABLES.GAME_CONTROLS });
 };
 
-export const getFilesForGame = async (id: string): Promise<GameFile[]> => {
-  return client.select().table<GameFile>("game_file").where("game_id", id);
+const getControlsForGame = async (id: string): Promise<Control[]> => {
+  return query<Control>({
+    TableName: TABLES.GAME_CONTROLS,
+    FilterExpression: "game_id = :value",
+    ExpressionAttributeValues: {
+      ":value": { S: id },
+    },
+  });
 };
 
-export default {
+export const resolvers = {
   Query: {
     games: getGames,
-    game: async (_: unknown, { id }: { id: string }): Promise<Game | undefined> => getGame(id),
+    game: async (_: unknown, { id }: { id: string }): Promise<Game | null> =>
+      getGame(id),
     featuredGames: getFeaturedGames,
     controls: getControls,
   },
