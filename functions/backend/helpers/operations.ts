@@ -1,8 +1,11 @@
+import { ApolloError } from "apollo-server-errors";
 import type {
   GetItemInput,
+  PutItemInput,
   QueryInput,
   ScanInput,
 } from "aws-sdk/clients/dynamodb";
+import { Converter } from "aws-sdk/clients/dynamodb";
 
 import { client } from "../db";
 
@@ -18,10 +21,9 @@ export const scan = async <T>(input: ScanInput): Promise<T[]> => {
     if (typeof results.Items === "undefined") {
       return [];
     }
-
-    return results.Items as T[];
-  } catch (_error: unknown) {
-    return [];
+    return results.Items.map((item) => Converter.unmarshall(item)) as T[];
+  } catch (error: unknown) {
+    throw new ApolloError(JSON.stringify(error));
   }
 };
 
@@ -32,15 +34,15 @@ export const scan = async <T>(input: ScanInput): Promise<T[]> => {
  */
 export const get = async <T>(input: GetItemInput): Promise<T | null> => {
   try {
-    const results = await client.get(input).promise();
+    const result = await client.getItem(input).promise();
 
-    if (typeof results.Item === "undefined") {
+    if (typeof result.Item === "undefined") {
       return null;
     }
 
-    return results.Item as T;
-  } catch (_error: unknown) {
-    return null;
+    return Converter.unmarshall(result.Item) as T;
+  } catch (error: unknown) {
+    throw new ApolloError(JSON.stringify(error));
   }
 };
 
@@ -57,8 +59,22 @@ export const query = async <T>(input: QueryInput): Promise<T[]> => {
       return [];
     }
 
-    return results.Items as T[];
-  } catch (_error: unknown) {
-    return [];
+    return results.Items.map((item) => Converter.unmarshall(item)) as T[];
+  } catch (error: unknown) {
+    throw new ApolloError(JSON.stringify(error));
+  }
+};
+
+/**
+ * Helper that types puts and promisifies them
+ * @param input Put input
+ * @returns Array of type T
+ */
+export const put = async (input: PutItemInput): Promise<boolean> => {
+  try {
+    await client.putItem(input).promise();
+    return true;
+  } catch (error: unknown) {
+    throw new ApolloError(JSON.stringify(error));
   }
 };

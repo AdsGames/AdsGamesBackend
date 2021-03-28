@@ -1,7 +1,7 @@
 import { gql } from "apollo-server-lambda";
 
 export const typeDefs = gql`
-  type Control {
+  type GameControl {
     game_id: ID!
     type: String!
     description: String!
@@ -19,52 +19,55 @@ export const typeDefs = gql`
     url: String!
   }
 
-  type Game {
-    id: ID!
-    short_name: String!
-    name: String!
-    description: String!
-    visible: Boolean
-    controls: [Control!]!
-    images: [GameImage!]!
-    files: [GameFile!]!
-  }
-
   type FeaturedGame {
     game_id: ID!
     place: Int!
   }
 
-  type Role {
+  type Game {
     id: ID!
+    short_name: String!
     name: String!
-    shortName: String!
+    description: String!
+    visible: Boolean!
   }
 
-  type User {
+  type ExtendedGame {
     id: ID!
+    short_name: String!
     name: String!
-    email: String!
-    role_id: ID!
-    avatar: String
-    about: String
-    website: String
-    location: String
-    role: Role!
+    description: String!
+    visible: Boolean
+    controls: [GameControl!]!
+    images: [GameImage!]!
+    files: [GameFile!]!
   }
 
   type Query {
-    users: [User!]!
-    user(id: String!): User
-    roles: [Role!]!
-    role(id: String!): Role
-    games: [Game!]!
-    game(id: String!): Game
+    games: [ExtendedGame!]!
+    game(id: String!): ExtendedGame
     featuredGames: [FeaturedGame!]!
-    controls: [Control!]!
+    controls: [GameControl!]!
   }
 
   type Mutation {
-    _empty: String
+    addGame(
+      id: ID!
+      short_name: String!
+      name: String!
+      description: String!
+      visible: Boolean!
+    ): Boolean!
+    updateGame(
+      id: ID!
+      short_name: String!
+      name: String!
+      description: String!
+      visible: Boolean!
+    ): Boolean!
+    addGameImage(game_id: ID!, type: String!, url: String!): Boolean!
+    addGameFile(game_id: ID!, platform: String!, url: String!): Boolean!
+    addFeaturedGame(game_id: ID!, place: Int!): Boolean!
+    addControl(game_id: ID!, type: String!, description: String!): Boolean!
   }
 `;

@@ -23,6 +23,8 @@
 
     "@typescript-eslint/no-magic-numbers": 0,
     "@typescript-eslint/naming-convention": 0,
-    "@typescript-eslint/prefer-readonly-parameter-types": 0
+    "@typescript-eslint/prefer-readonly-parameter-types": 0,
+    "@typescript-eslint/consistent-type-definitions": 0,
+    "@typescript-eslint/no-type-alias": 0
   }
 }

@@ -20,6 +20,7 @@ provider:
     FEATURED_GAMES_TABLE: ${self:service}-${opt:stage, 'dev'}-featured-games
     IMAGE_BUCKET: ${self:service}-${opt:stage, 'dev'}-image-bucket
     FILE_BUCKET: ${self:service}-${opt:stage, 'dev'}-file-bucket
+    USER_POOL: ${self:service}-${opt:stage, 'dev'}-user-pool
   iam:
     role:
       statements:
@@ -134,6 +135,9 @@ resources:
   Resources:
     UserPool:
       Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:provider.environment.USER_POOL}
+
     GamesTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
@@ -147,6 +151,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     ControlsTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
@@ -164,6 +169,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     GameFilesTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
@@ -181,6 +187,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     GameImagesTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
@@ -198,6 +205,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     FeaturedGamesTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
@@ -211,10 +219,12 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     ImageBucket:
       Type: "AWS::S3::Bucket"
       Properties:
         BucketName: ${self:provider.environment.IMAGE_BUCKET}
+
     FileBucket:
       Type: "AWS::S3::Bucket"
       Properties:

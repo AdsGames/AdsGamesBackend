@@ -1,40 +1,38 @@
-export interface ControlType {
-  id: string;
-  name: string;
-  short_name: string;
-  image: string;
-}
-
-export interface Control {
+export type GameControl = {
   game_id: string;
   description: string;
   type: string;
-}
+};
 
-export interface GameImage {
+export type GameImage = {
   game_id: string;
   type: "large" | "thumbnail" | "wide";
   url: string;
-}
+};
 
-export interface GameFile {
+export type GameFile = {
   game_id: string;
   platform: "linux" | "mac" | "source" | "web" | "windows";
   url: string;
-}
+};
 
-export interface Game {
+export type Game = {
   id: string;
   short_name: string;
   name: string;
   description: string;
   visible: boolean;
-  controls: Control[];
-  images: GameImage[];
-  files: GameFile[];
-}
+};
 
-export interface FeaturedGame {
+export type GameInput = {
+  id: string;
+  short_name: string;
+  name: string;
+  description: string;
+  visible: boolean;
+};
+
+export type FeaturedGame = {
   game_id: string;
   place: number;
-}
+};
