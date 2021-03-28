@@ -11,10 +11,12 @@
     "start": "sls offline",
     "start:db": "sls dynamodb start",
     "start:dbadmin": "export DYNAMO_ENDPOINT=http://localhost:8000 && yarn dynamodb-admin -o",
-    "deploy": "sls deploy",
-    "destroy": "sls remove",
+    "deploy:stage": "sls deploy -s stage",
+    "deploy:production": "sls deploy -s production",
+    "destroy:stage": "sls remove -s stage",
+    "destroy:production": "sls remove -s production",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint": "eslint .",
     "type-check": "tsc --no-emit=true",
     "format-check": "prettier --check \"src/**/*.{ts,tsx,md}\"",
     "setup:dynamo": "sls dynamodb install"
@@ -23,9 +25,12 @@
     "apollo-server-lambda": "^2.22.1",
     "aws-sdk": "^2.874.0",
     "graphql": "^15.4.0",
+    "jimp": "^0.16.1",
+    "lambda-multipart-parser": "^1.0.1",
     "uuid": "^8.1.0"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.73",
     "@types/node": "^14.0.13",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",

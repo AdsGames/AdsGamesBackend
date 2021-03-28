@@ -6,7 +6,7 @@
   },
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "extends": ["eslint:all", "plugin:@typescript-eslint/all", "prettier", "prettier/@typescript-eslint"],
+  "extends": ["eslint:all", "plugin:@typescript-eslint/all", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -19,6 +19,7 @@
     "sort-keys": 0,
     "no-process-env": 0,
     "arrow-body-style": 0,
+    "camelcase": 0,
 
     "@typescript-eslint/no-magic-numbers": 0,
     "@typescript-eslint/naming-convention": 0,

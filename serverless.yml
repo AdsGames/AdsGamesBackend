@@ -13,11 +13,13 @@ provider:
   lambdaHashingVersion: 20201221
   region: us-east-1
   environment:
-    GAMES_TABLE: games
-    GAME_CONTROLS_TABLE: game_controls
-    GAME_FILES_TABLE: game_files
-    GAME_IMAGES_TABLE: game_images
-    FEATURED_GAMES_TABLE: featured_games
+    GAMES_TABLE: ${self:service}-${opt:stage, 'dev'}-games
+    GAME_CONTROLS_TABLE: ${self:service}-${opt:stage, 'dev'}-game-controls
+    GAME_FILES_TABLE: ${self:service}-${opt:stage, 'dev'}-game-files
+    GAME_IMAGES_TABLE: ${self:service}-${opt:stage, 'dev'}-game-images
+    FEATURED_GAMES_TABLE: ${self:service}-${opt:stage, 'dev'}-featured-games
+    IMAGE_BUCKET: ${self:service}-${opt:stage, 'dev'}-image-bucket
+    FILE_BUCKET: ${self:service}-${opt:stage, 'dev'}-file-bucket
   iam:
     role:
       statements:
@@ -66,6 +68,16 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.FEATURED_GAMES_TABLE}"
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+          Resource: "arn:aws:s3:::${self:provider.environment.FILE_BUCKET}/*"
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+          Resource: "arn:aws:s3:::${self:provider.environment.IMAGE_BUCKET}/*"
 
 custom:
   dynamodb:
@@ -92,8 +104,8 @@ custom:
     useChildProcesses: true
 
 functions:
-  hello:
-    handler: src/index.graphql
+  backend:
+    handler: functions/backend/index.graphql
     events:
       - http:
           path: graphql
@@ -101,6 +113,20 @@ functions:
           cors: true
       - http:
           path: graphql
+          method: post
+          cors: true
+  imageUploader:
+    handler: functions/image-uploader/index.handler
+    events:
+      - http:
+          path: upload/image
+          method: post
+          cors: true
+  fileUploader:
+    handler: functions/file-uploader/index.handler
+    events:
+      - http:
+          path: upload/file
           method: post
           cors: true
 
@@ -185,3 +211,11 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    ImageBucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: ${self:provider.environment.IMAGE_BUCKET}
+    FileBucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: ${self:provider.environment.FILE_BUCKET}

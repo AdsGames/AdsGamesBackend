@@ -21,8 +21,6 @@ export const scan = async <T>(input: ScanInput): Promise<T[]> => {
 
     return results.Items as T[];
   } catch (_error: unknown) {
-    console.log(_error);
-
     return [];
   }
 };
