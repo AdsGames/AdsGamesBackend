@@ -1,0 +1,212 @@
+[
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "A",
+    "description": "Size -"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "B",
+    "description": "Brightness effect"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "C",
+    "description": "Pixelate effect"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "M",
+    "description": "Change brush"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "N",
+    "description": "Transparency effect"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "S",
+    "description": "Size +"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "V",
+    "description": "Mosaic effect"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "X",
+    "description": "Swirl effect"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "Z",
+    "description": "Fisheye effect"
+  },
+  {
+    "game_id": "059a1935-8950-4bb1-9acd-9e27e79741c4",
+    "type": "ARROW_KEYS",
+    "description": "Move brush"
+  },
+  {
+    "game_id": "ba2e031b-2637-4f9b-b2e6-c5837cee3853",
+    "type": "UP",
+    "description": "Move plane up"
+  },
+  {
+    "game_id": "28aeb585-e062-452e-b584-5ca3154646ce",
+    "type": "DOWN",
+    "description": "Brake"
+  },
+  {
+    "game_id": "28aeb585-e062-452e-b584-5ca3154646ce",
+    "type": "LEFT",
+    "description": "Move left"
+  },
+  {
+    "game_id": "28aeb585-e062-452e-b584-5ca3154646ce",
+    "type": "RIGHT",
+    "description": "Move right"
+  },
+  {
+    "game_id": "28aeb585-e062-452e-b584-5ca3154646ce",
+    "type": "SPACE",
+    "description": "Honk horn"
+  },
+  {
+    "game_id": "28aeb585-e062-452e-b584-5ca3154646ce",
+    "type": "UP",
+    "description": "Accelerate"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "1",
+    "description": "Draw grass (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "2",
+    "description": "Draw rough grass (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "3",
+    "description": "Draw water (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "4",
+    "description": "Draw sand (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "5",
+    "description": "Draw barrier (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "6",
+    "description": "Eraser (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "7",
+    "description": "Brush size + (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "8",
+    "description": "Brush size - (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "9",
+    "description": "Clear all (edit mode)"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "DOWN",
+    "description": "Aim arrow downwards"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "E",
+    "description": "Toggle menu"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "LEFT",
+    "description": "Power down"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "RIGHT",
+    "description": "Power up"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "SPACE",
+    "description": "Shoot ball"
+  },
+  {
+    "game_id": "7ed5c0c0-396f-4222-80cc-30233e5edb93",
+    "type": "UP",
+    "description": "Aim arrow upwards"
+  },
+  {
+    "game_id": "b19265f8-a63f-4bef-8a46-f7ac3887f66c",
+    "type": "ESC",
+    "description": "Menu"
+  },
+  {
+    "game_id": "b19265f8-a63f-4bef-8a46-f7ac3887f66c",
+    "type": "K",
+    "description": "Suicide"
+  },
+  {
+    "game_id": "b19265f8-a63f-4bef-8a46-f7ac3887f66c",
+    "type": "LEFT_MOUSE",
+    "description": "Increase bow power and release arrow"
+  },
+  {
+    "game_id": "b19265f8-a63f-4bef-8a46-f7ac3887f66c",
+    "type": "MOUSE",
+    "description": "Aim bow"
+  },
+  {
+    "game_id": "b19265f8-a63f-4bef-8a46-f7ac3887f66c",
+    "type": "SPACE",
+    "description": "Jump"
+  },
+  {
+    "game_id": "b19265f8-a63f-4bef-8a46-f7ac3887f66c",
+    "type": "ARROW_KEYS",
+    "description": "Move left/right and climb ladders"
+  },
+  {
+    "game_id": "da53d10c-3864-4189-bb87-4908ab5aad9b",
+    "type": "MOUSE",
+    "description": "Move ship"
+  },
+  {
+    "game_id": "5bd9d63e-fadd-4cae-918f-461396775cb5",
+    "type": "S",
+    "description": "Player 1 down"
+  },
+  {
+    "game_id": "5bd9d63e-fadd-4cae-918f-461396775cb5",
+    "type": "DOWN",
+    "description": "Player 2 down"
+  },
+  {
+    "game_id": "5bd9d63e-fadd-4cae-918f-461396775cb5",
+    "type": "W",
+    "description": "Player 1 up"
+  },
+  {
+    "game_id": "5bd9d63e-fadd-4cae-918f-461396775cb5",
+    "type": "UP",
+    "description": "Player 2 up"
+  }
+]

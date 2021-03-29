@@ -2,20 +2,16 @@
   "compilerOptions": {
     "module": "commonjs",
     "strict": true,
-    "noEmit": true,
-    "baseUrl": "./",
-    "outDir": "build",
     "removeComments": true,
     "experimentalDecorators": true,
     "target": "es6",
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
-    "importHelpers": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["functions"]
 }

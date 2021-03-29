@@ -1,0 +1,235 @@
+service: adsgames-backend
+frameworkVersion: "2"
+useDotenv: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dynamodb-local
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  region: us-east-1
+  environment:
+    GAMES_TABLE: ${self:service}-${opt:stage, 'dev'}-games
+    GAME_CONTROLS_TABLE: ${self:service}-${opt:stage, 'dev'}-game-controls
+    GAME_FILES_TABLE: ${self:service}-${opt:stage, 'dev'}-game-files
+    GAME_IMAGES_TABLE: ${self:service}-${opt:stage, 'dev'}-game-images
+    FEATURED_GAMES_TABLE: ${self:service}-${opt:stage, 'dev'}-featured-games
+    IMAGE_BUCKET: ${self:service}-${opt:stage, 'dev'}-image-bucket
+    FILE_BUCKET: ${self:service}-${opt:stage, 'dev'}-file-bucket
+    USER_POOL: ${self:service}-${opt:stage, 'dev'}-user-pool
+  apiGateway:
+    binaryMediaTypes: "*/*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.GAMES_TABLE}"
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.GAME_CONTROLS_TABLE}"
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.GAME_FILES_TABLE}"
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.GAME_IMAGES_TABLE}"
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.FEATURED_GAMES_TABLE}"
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:PutObjectAcl
+            - s3:GetObject
+          Resource: "arn:aws:s3:::${self:provider.environment.FILE_BUCKET}/*"
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:PutObjectAcl
+            - s3:GetObject
+          Resource: "arn:aws:s3:::${self:provider.environment.IMAGE_BUCKET}/*"
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      migrate: true
+      seed: true
+    seed:
+      domain:
+        sources:
+          - table: ${self:provider.environment.GAMES_TABLE}
+            sources: [./seeds/games.json]
+          - table: ${self:provider.environment.GAME_CONTROLS_TABLE}
+            sources: [./seeds/controls.json]
+          - table: ${self:provider.environment.GAME_FILES_TABLE}
+            sources: [./seeds/game_files.json]
+          - table: ${self:provider.environment.GAME_IMAGES_TABLE}
+            sources: [./seeds/game_images.json]
+          - table: ${self:provider.environment.FEATURED_GAMES_TABLE}
+            sources: [./seeds/featured_games.json]
+  serverless-offline:
+    noPrependStageInUrl: true
+    useChildProcesses: true
+
+functions:
+  backend:
+    handler: functions/backend/index.graphql
+    events:
+      - http:
+          path: graphql
+          method: get
+          cors: true
+      - http:
+          path: graphql
+          method: post
+          cors: true
+  imageUploader:
+    handler: functions/image-uploader/index.handler
+    events:
+      - http:
+          path: upload/image
+          method: post
+          cors: true
+  fileUploader:
+    handler: functions/file-uploader/index.handler
+    events:
+      - http:
+          path: upload/file
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    AuthUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:provider.environment.USER_POOL}
+
+    GamesTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.GAMES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    ControlsTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.GAME_CONTROLS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: game_id
+            AttributeType: S
+          - AttributeName: type
+            AttributeType: S
+        KeySchema:
+          - AttributeName: game_id
+            KeyType: HASH
+          - AttributeName: type
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    GameFilesTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.GAME_FILES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: game_id
+            AttributeType: S
+          - AttributeName: platform
+            AttributeType: S
+        KeySchema:
+          - AttributeName: game_id
+            KeyType: HASH
+          - AttributeName: platform
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    GameImagesTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.GAME_IMAGES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: game_id
+            AttributeType: S
+          - AttributeName: type
+            AttributeType: S
+        KeySchema:
+          - AttributeName: game_id
+            KeyType: HASH
+          - AttributeName: type
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    FeaturedGamesTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.FEATURED_GAMES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: game_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: game_id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    ImageBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.IMAGE_BUCKET}
+
+    FileBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.FILE_BUCKET}

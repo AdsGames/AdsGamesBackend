@@ -1,98 +1,79 @@
-<h1 align="center">
-  A.D.S. Games Backend
-</h1>
+# A.D.S. Games Backend
 
 Future backend for A.D.S. Games website
 
-## 🌍 Env file
-
-```
-PG_USER=adsgames
-PG_DATABASE=adsgames
-PG_PASSWORD=adsgames
-PG_HOST=localhost
-PG_PORT=5432
-```
-
 ## 🔧 Quickstart
 
-1. **Build postgres docker container**
+Install
 
 ```bash
-docker build -t adsgames .
+yarn
 ```
 
-2. **Run postgres instance**
+Start
 
 ```bash
-docker run --rm -p 5432:5432 adsgames
+yarn start
 ```
-
-3. **Install dependencies**
-
-```bash
-yarn install
-```
-
-4. **Run migrations and seed database**
-
-```bash
-yarn db-init
-```
-
-5. **Start graphql server**
-
-```bash
-yarn start-dev
-```
-
-6. **Go to playground**
-
-`https://localhost:4000`
 
 ## 📝 Scripts
 
-### Codegen type generation
+### Serverless
 
-Codegen provides a quick and easy way to generate typescript types from the graphql schema. You will have to have the graphql server running for this to work.
+Start serverless offline
 
 ```bash
-yarn codegen
+yarn start
 ```
 
-### Create db migrations
+Deploy to stage site
 
 ```bash
-npx knex migrate:make migration_name -x ts
+yarn deploy:stage
 ```
 
-### Run migrations
+Remove stage deployment
 
 ```bash
-npx knex migrate:latest
-
-## OR
-yarn migrate
+yarn destroy:stage
 ```
 
-### Rollback migrations
+### Dynamodb local
+
+Setup dynamo db local
 
 ```bash
-npx knex migrate:rollback
-
-## OR
-yarn rollback
+yarn setup:dynamo
 ```
 
-### Create seed file
+Start dynamo local
 
 ```bash
-npx knex seed:make seed_name
+yarn start:db
 ```
 
-### Run seedfile
+View admin panel
 
 ```bash
-npx knex seed:run` or `yarn seed`
+yarn start:dbadmin
+```
 
+### Linting
+
+Check linting of project
+
+```bash
+yarn lint
+```
+
+Check formatting of project
+
+```bash
+yarn format-check
+```
+
+Typecheck project
+
+```bash
+yarn type-check
 ```
