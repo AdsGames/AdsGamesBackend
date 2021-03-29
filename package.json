@@ -17,7 +17,7 @@
     "destroy:production": "sls remove -s production",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint .",
-    "type-check": "tsc --no-emit=true",
+    "type-check": "tsc --noEmit true",
     "format-check": "prettier --check \"src/**/*.{ts,tsx,md}\"",
     "setup:dynamo": "sls dynamodb install"
   },
