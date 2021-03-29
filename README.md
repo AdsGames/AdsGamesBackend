@@ -18,6 +18,26 @@ yarn start
 
 ## 📝 Scripts
 
+### Serverless
+
+Start serverless offline
+
+```bash
+yarn start
+```
+
+Deploy to stage site
+
+```bash
+yarn deploy:stage
+```
+
+Remove stage deployment
+
+```bash
+yarn destroy:stage
+```
+
 ### Dynamodb local
 
 Setup dynamo db local
@@ -38,10 +58,22 @@ View admin panel
 yarn start:dbadmin
 ```
 
-### Codegen type generation
+### Linting
 
-Codegen provides a quick and easy way to generate typescript types from the graphql schema. You will have to have the graphql server running for this to work.
+Check linting of project
 
 ```bash
-yarn codegen
+yarn lint
+```
+
+Check formatting of project
+
+```bash
+yarn format-check
+```
+
+Typecheck project
+
+```bash
+yarn type-check
 ```

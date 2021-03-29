@@ -15,7 +15,6 @@
     "deploy:production": "sls deploy -s production",
     "destroy:stage": "sls remove -s stage",
     "destroy:production": "sls remove -s production",
-    "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint .",
     "type-check": "tsc --noEmit true",
     "format-check": "prettier --check .",
