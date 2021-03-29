@@ -21,6 +21,8 @@ provider:
     IMAGE_BUCKET: ${self:service}-${opt:stage, 'dev'}-image-bucket
     FILE_BUCKET: ${self:service}-${opt:stage, 'dev'}-file-bucket
     USER_POOL: ${self:service}-${opt:stage, 'dev'}-user-pool
+  apiGateway:
+    binaryMediaTypes: "*/*"
   iam:
     role:
       statements:
@@ -72,11 +74,13 @@ provider:
         - Effect: Allow
           Action:
             - s3:PutObject
+            - s3:PutObjectAcl
             - s3:GetObject
           Resource: "arn:aws:s3:::${self:provider.environment.FILE_BUCKET}/*"
         - Effect: Allow
           Action:
             - s3:PutObject
+            - s3:PutObjectAcl
             - s3:GetObject
           Resource: "arn:aws:s3:::${self:provider.environment.IMAGE_BUCKET}/*"
 
@@ -133,7 +137,7 @@ functions:
 
 resources:
   Resources:
-    UserPool:
+    AuthUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: ${self:provider.environment.USER_POOL}
@@ -221,11 +225,11 @@ resources:
           WriteCapacityUnits: 1
 
     ImageBucket:
-      Type: "AWS::S3::Bucket"
+      Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.IMAGE_BUCKET}
 
     FileBucket:
-      Type: "AWS::S3::Bucket"
+      Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.FILE_BUCKET}

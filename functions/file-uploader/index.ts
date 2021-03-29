@@ -1,24 +1,21 @@
-/* eslint-disable max-lines-per-function */
 /* eslint-disable max-statements */
 import AWS from "aws-sdk";
 import { v4 } from "uuid";
-import type {
-  APIGatewayProxyEvent,
-  APIGatewayProxyHandlerV2,
-} from "aws-lambda";
-import * as MultipartParser from "lambda-multipart-parser";
+import * as FileType from "file-type";
+
+import type { APIGatewayProxyHandlerV2 } from "aws-lambda";
 
 const s3 = new AWS.S3();
 
 const BUCKET_ID = process.env.FILE_BUCKET ?? "";
 
-const getErrorMessage = (
-  message: string
-): { statusCode: number; body: string } => ({
-  statusCode: 500,
-  body: JSON.stringify({ message }),
-});
-
+/**
+ * Upload to S3
+ * @param key S3 Key for S3
+ * @param buffer File buffer to upload
+ * @param mimeType Type of file
+ * @returns Promise to S3 SendData
+ */
 const uploadToS3 = async (
   key: string,
   buffer: Buffer,
@@ -30,43 +27,47 @@ const uploadToS3 = async (
       Key: key,
       Body: buffer,
       ContentType: mimeType,
+      ACL: "public-read",
     })
     .promise();
 
-export const handler: APIGatewayProxyHandlerV2 = async (event) => {
+/**
+ * File Uploader Handler
+ * @param event API Gateway Event
+ * @returns Status object
+ */
+export const handler: APIGatewayProxyHandlerV2<void> = async (
+  event,
+  _context,
+  callback
+) => {
   try {
-    const data = await MultipartParser.parse(
-      (event as unknown) as APIGatewayProxyEvent
-    );
-    const [file] = data.files;
-
-    if (typeof file === "undefined") {
-      return getErrorMessage("No file provided");
+    if (typeof event.body !== "string") {
+      throw Error("Must provide file");
     }
 
-    const uid = v4();
-    const key = `${uid}_original`;
+    const buffer = Buffer.from(event.body, "base64");
+    const type = await FileType.fromBuffer(buffer);
 
-    const originalFile = await uploadToS3(key, file.content, file.contentType);
+    if (typeof type === "undefined") {
+      throw Error("Could not detect content type");
+    }
 
-    const signedOriginalUrl = s3.getSignedUrl("getObject", {
-      Bucket: originalFile.Bucket,
-      Key: key,
-      Expires: 60000,
-    });
+    const key = `${v4()}${type.ext}`;
 
-    return {
+    const originalFile = await uploadToS3(key, buffer, type.mime);
+
+    callback(null, {
       statusCode: 200,
       body: JSON.stringify({
-        id: uid,
-        mimeType: file.contentType,
+        mimeType: type.mime,
+        size: buffer.length,
         key: originalFile.Key,
         bucket: originalFile.Bucket,
-        url: signedOriginalUrl,
-        size: file.content.length,
+        url: originalFile.Location,
       }),
-    };
+    });
   } catch (error: unknown) {
-    return getErrorMessage(JSON.stringify(error));
+    callback(JSON.stringify(error));
   }
 };
